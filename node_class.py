@@ -1,5 +1,5 @@
 class node: # 7 pierwszych warosci odpowiada tym z 1 prezentacji
-    def __init__(self, es, t, ef, n, ls, r, lf, pr, ne):
+    def __init__(self,t,n,pr , es= None , ef= None, ls= None, r= None, lf= None, ne= None):
         self.early_start = es
         self.duration = t
         self.early_finish = ef
