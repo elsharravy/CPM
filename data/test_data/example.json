@@ -1,0 +1,24 @@
+{
+    "activities": [
+      {
+        "name": "A",
+        "duration": 5,
+        "precedent": ""
+      },
+      {
+        "name": "B",
+        "duration": 8,
+        "precedent": "A"
+      },
+      {
+        "name": "C",
+        "duration": 3,
+        "precedent": "A,B"
+      },
+      {
+        "name": "D",
+        "duration": 7,
+        "precedent": "C"
+      }
+    ]
+  }

@@ -1,5 +1,5 @@
 class node: # 7 pierwszych warosci odpowiada tym z 1 prezentacji
-    def __init__(self,t,n,pr , es= None , ef= None, ls= None, r= None, lf= None, ne= None):
+    def __init__(self,t,n,pr = None , es= None , ef= None, ls= None, r= None, lf= None, ne= None):
         self.early_start = es
         self.duration = t
         self.early_finish = ef
@@ -7,8 +7,8 @@ class node: # 7 pierwszych warosci odpowiada tym z 1 prezentacji
         self.late_start = ls
         self.reserve = r
         self.late_finish = lf
-        self.previous = pr  #lista poprzednikow
-        self.next = ne  #lista nastepnych nodow
+        self.previous = pr if pr is not None else []
+        self.next = ne if ne is not None else [] 
 
 # idk czy potrzebne sa gettery i settery ale sa jako opis na jire
 
