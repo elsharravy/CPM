@@ -1,0 +1,43 @@
+[
+    {
+        "name": "Start",
+        "duration": 5,
+        "early_start": 0,
+        "early_finish": 5,
+        "late_start": 0,
+        "late_finish": 5,
+        "reserve": 0,
+        "previous": [],
+        "next": [
+            "TaskA"
+        ]
+    },
+    {
+        "name": "TaskA",
+        "duration": 3,
+        "early_start": 5,
+        "early_finish": 8,
+        "late_start": 5,
+        "late_finish": 8,
+        "reserve": 0,
+        "previous": [
+            "Start"
+        ],
+        "next": [
+            "End"
+        ]
+    },
+    {
+        "name": "End",
+        "duration": 2,
+        "early_start": 8,
+        "early_finish": 10,
+        "late_start": 8,
+        "late_finish": 10,
+        "reserve": 0,
+        "previous": [
+            "TaskA"
+        ],
+        "next": []
+    }
+]

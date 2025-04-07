@@ -1,0 +1,26 @@
+[
+    {
+        "name": "A",
+        "duration": 4,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
+        "previous": [],
+        "next": []
+    },
+    {
+        "name": "B",
+        "duration": 3,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
+        "previous": [
+            "A"
+        ],
+        "next": []
+    }
+]

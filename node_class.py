@@ -65,3 +65,17 @@ class node: # 7 pierwszych warosci odpowiada tym z 1 prezentacji
     
     def set_ne(self, val):
         self.next = val
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "duration": self.duration,
+            "early_start": self.early_start,
+            "early_finish": self.early_finish,
+            "late_start": self.late_start,
+            "late_finish": self.late_finish,
+            "reserve": self.reserve,
+            "previous": self.previous,
+            "next": self.next
+        }
+
