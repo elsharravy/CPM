@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Node</title>
+</head>
+<body>
+    <h1>Add a New Node</h1>
+    <form method="post" action="/add">
+        <label>Name: <input type="text" name="n" required></label><br>
+        <label>Duration: <input type="number" name="t" required></label><br>
+        <label>Previous (comma-separated): <input type="text" name="pr"></label><br>
+        <label>Early Start: <input type="number" name="es"></label><br>
+        <label>Early Finish: <input type="number" name="ef"></label><br>
+        <label>Late Start: <input type="number" name="ls"></label><br>
+        <label>Reserve: <input type="number" name="r"></label><br>
+        <label>Late Finish: <input type="number" name="lf"></label><br>
+        <label>Next (comma-separated): <input type="text" name="ne"></label><br>
+        <button type="submit">Add Node</button>
+    </form>
+
+    {% if message %}
+        <p style="color:green;">{{ message }}</p>
+    {% endif %}
+</body>
+</html>
