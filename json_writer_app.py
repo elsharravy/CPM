@@ -1,10 +1,15 @@
 from flask import Flask, render_template, request
 from node_class import node
 from json_writer import JsonWriter
+from json_reader import Json_reader
+from Compiler_class import Compiler
+
 import json
 
 app = Flask(__name__)
 OUTPUT_PATH = 'test_output.json'
+INPUT_PATH = OUTPUT_PATH
+
 
 def clean_item(item):
     return {
@@ -60,6 +65,16 @@ def add_node():
     writer.write_nodes(nodes)
 
     return render_template('json_writer_site.html', message=f'Node \"{n}\" added successfully!')
+
+@app.route("/gen")
+def loadNodesFromJSONAndSendToWebsite():
+    nodes = Json_reader.load( INPUT_PATH )
+    compiled_nodes = Compiler.compile(nodes)
+    links = [
+        { source: 'A', target: 'B' },
+        { source: 'B', target: 'C' }
+    ];
+    return jsonify({"nodes": compiled_nodes, "links": links})
 
 if __name__ == '__main__':
     app.run(debug=True)
