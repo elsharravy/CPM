@@ -6,11 +6,24 @@ import json
 app = Flask(__name__)
 OUTPUT_PATH = 'test_output.json'
 
+def clean_item(item):
+    return {
+        'n': item.get('name'),              # rename 'node_id' -> 'id'
+        't': item.get('duration'),   # rename 'content' -> 'value', default to 'empty'
+        'es': item.get('early_start'), 
+        'ef': item.get('early_finish'),
+        'ls': item.get('late_start'),
+        'lf': item.get('late_finish'),
+        'r': item.get('reserve'), 
+        'pr': item.get('previous'),
+        'ne': item.get('next')
+    }
+
 def load_existing_nodes():
     try:
         with open(OUTPUT_PATH, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        return [node(**item) for item in data]
+        return [node(**clean_item(item)) for item in data]
     except FileNotFoundError:
         return []
 
