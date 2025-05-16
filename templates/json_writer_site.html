@@ -21,130 +21,119 @@
     </form>
 
 
-<button type="button">Generate graph</button>
+<button onclick="loadGraph()">Generate/Refresh Graph</button>
 
     <h2>Node Graph</h2>
 <svg id="graph" width="800" height="600" style="border:1px solid #ccc;"></svg>
 
 
 <script>
-    // Example static data — replace with your dynamic node list
-    const nodes = [
-            {
-        id: 'A',
-        top: 33,
-        right: 56,
-        bottom: 68,
-        left: 68
-    },
-                   {
-        id: 'B',
-        top: 33,
-        right: 56,
-        bottom: 68,
-        left: 68
-    },
-                    {
-        id: 'C',
-        top: 1,
-        right: 2,
-        bottom: 3,
-        left: 68
-    }
-    ];
+function loadGraph() {
+    fetch('/gen')
+        .then(response => response.json())
+        .then(data => {
+            updateGraph(data.nodes, data.links);
+        });
+}
 
-    const links = [
-        { source: 'A', target: 'B' },
-        { source: 'B', target: 'C' }
-    ];
+// Initial empty graph
+const svg = d3.select("#graph");
+const width = +svg.attr("width");
+const height = +svg.attr("height");
 
-    const svg = d3.select("#graph");
-    const width = +svg.attr("width");
-    const height = +svg.attr("height");
+let nodeGroup, linkGroup;
+
+function updateGraph(nodes, links) {
+    svg.selectAll("*").remove(); // Clear previous graph
 
     const simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-        .force("charge", d3.forceManyBody().strength(-400))
+        .force("charge", d3.forceManyBody().strength(-300))
         .force("center", d3.forceCenter(width / 2, height / 2));
 
-// 1. Draw the links (lines between nodes)
-const link = svg.append("g")
-    .attr("stroke", "#999")
-    .attr("stroke-opacity", 0.6)
-    .selectAll("line")
-    .data(links)
-    .join("line")
-    .attr("stroke-width", 2);
+    svg.append("defs").append("marker")
+        .attr("id", "arrowhead")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+      .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#999");
 
-const nodeGroup = svg.append("g")
-    .selectAll("g")
-    .data(nodes)
-    .join("g")
-    .call(drag(simulation));
+    linkGroup = svg.append("g")
+        .attr("stroke", "#999")
+        .attr("stroke-opacity", 0.6)
+      .selectAll("line")
+      .data(links)
+      .join("line")
+        .attr("stroke-width", 2)
+        .attr("marker-end", "url(#arrowhead)");
 
-// Draw circle
-nodeGroup.append("circle")
-    .attr("r", 40)
-    .attr("fill", "#fff")
-    .attr("stroke", "#000")
-    .attr("stroke-width", 2);
+    nodeGroup = svg.append("g")
+      .selectAll("g")
+      .data(nodes)
+      .join("g")
+      .call(drag(simulation));
 
-// Add top text
-nodeGroup.append("text")
-    .attr("x", 0)
-    .attr("y", -20)
-    .attr("text-anchor", "middle")
-    .text(d => d.top);
+    nodeGroup.append("circle")
+        .attr("r", 40)
+        .attr("fill", "#fff")
+        .attr("stroke", "#000")
+        .attr("stroke-width", 2);
 
-// Right text
-nodeGroup.append("text")
-    .attr("x", 20)
-    .attr("y", 5)
-    .attr("text-anchor", "start")
-    .text(d => d.right);
+    nodeGroup.append("text")
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .text(d => d.top);
 
-// Bottom
-nodeGroup.append("text")
-    .attr("x", 0)
-    .attr("y", 25)
-    .attr("text-anchor", "middle")
-    .text(d => d.bottom);
+    nodeGroup.append("text")
+        .attr("x", 20)
+        .attr("y", 5)
+        .attr("text-anchor", "start")
+        .text(d => d.right);
 
-// Left
-nodeGroup.append("text")
-    .attr("x", -20)
-    .attr("y", 5)
-    .attr("text-anchor", "end")
-    .text(d => d.left);
+    nodeGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 25)
+        .attr("text-anchor", "middle")
+        .text(d => d.bottom);
 
-// Update position on tick
-simulation.on("tick", () => {
-    nodeGroup.attr("transform", d => `translate(${d.x},${d.y})`);
+    nodeGroup.append("text")
+        .attr("x", -20)
+        .attr("y", 5)
+        .attr("text-anchor", "end")
+        .text(d => d.left);
 
-    link
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y);
-});
+    simulation.on("tick", () => {
+        nodeGroup.attr("transform", d => `translate(${d.x},${d.y})`);
+        linkGroup
+            .attr("x1", d => d.source.x)
+            .attr("y1", d => d.source.y)
+            .attr("x2", d => d.target.x)
+            .attr("y2", d => d.target.y);
+    });
+}
 
-    function drag(simulation) {
-        return d3.drag()
-            .on("start", (event, d) => {
-                if (!event.active) simulation.alphaTarget(0.3).restart();
-                d.fx = d.x;
-                d.fy = d.y;
-            })
-            .on("drag", (event, d) => {
-                d.fx = event.x;
-                d.fy = event.y;
-            })
-            .on("end", (event, d) => {
-                if (!event.active) simulation.alphaTarget(0);
-                d.fx = null;
-                d.fy = null;
-            });
-    }
+function drag(simulation) {
+    return d3.drag()
+        .on("start", (event, d) => {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        })
+        .on("drag", (event, d) => {
+            d.fx = event.x;
+            d.fy = event.y;
+        })
+        .on("end", (event, d) => {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        });
+}
 </script>
 
     {% if message %}

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from node_class import node
 from json_writer import JsonWriter
 from json_reader import Json_reader
@@ -69,12 +69,19 @@ def add_node():
 @app.route("/gen")
 def loadNodesFromJSONAndSendToWebsite():
     nodes = Json_reader.load( INPUT_PATH )
-    compiled_nodes = Compiler.compile(nodes)
+    compiled_nodes = Compiler.Compile(nodes)
     links = [
-        { source: 'A', target: 'B' },
-        { source: 'B', target: 'C' }
+        { "source": 'A', "target": 'B' },
+        { "source": 'B', "target": 'C' }
     ];
-    return jsonify({"nodes": compiled_nodes, "links": links})
+
+    arrayOfGraphData = []
+
+    for i in range(len(compiled_nodes)):
+        obj = dict( id=i, left= compiled_nodes[i].get_es(), right=compiled_nodes[i].get_ef(), bottom=compiled_nodes[i].get_r(), top=i  )
+        arrayOfGraphData.append(obj)
+
+    return jsonify({"nodes": arrayOfGraphData, "links": links})
 
 if __name__ == '__main__':
     app.run(debug=True)
