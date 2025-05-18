@@ -69,6 +69,15 @@ def add_node():
 @app.route("/gen")
 def loadNodesFromJSONAndSendToWebsite():
     nodes = Json_reader.load( INPUT_PATH )
+    for i in range(len(nodes)):
+       prev = nodes[i].get_pr()
+       for j in range(len(prev)):
+          print(f"Prev[j] jest rowne: {prev[j]}")
+          for k in range(len(nodes)):
+             if prev[j] == nodes[k].get_n():
+                prev[j]=k
+                print(f"K jest rowne: {k}")
+                break
     compiled_nodes = Compiler.Compile(nodes)
     links = [
         { "source": 'A', "target": 'B' },

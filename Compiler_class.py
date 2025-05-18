@@ -5,6 +5,7 @@ import node_class
 class Compiler(object):
     def __init__(self):
         a=0
+# expects previous attribute in nodes to be array of indices of nodes being previous to it
     @staticmethod
     def Compile(nodes):
         leng = len(nodes)

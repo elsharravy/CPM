@@ -2,6 +2,8 @@ import json
 import node_class
 import strings
 
+# returns array of nodes
+
 class Json_reader:
     @staticmethod
     def load(filePath):
