@@ -50,5 +50,124 @@
         "reserve": null,
         "previous": [],
         "next": []
+    },
+    {
+        "name": "first node",
+        "duration": 3,
+        "early_start": 5,
+        "early_finish": 4,
+        "late_start": 2,
+        "late_finish": 5,
+        "reserve": 1,
+        "previous": [
+            "1",
+            "2"
+        ],
+        "next": [
+            "3",
+            "4"
+        ]
+    },
+    {
+        "name": "first node",
+        "duration": 3,
+        "early_start": 5,
+        "early_finish": 4,
+        "late_start": 2,
+        "late_finish": 5,
+        "reserve": 1,
+        "previous": [
+            "1",
+            "2"
+        ],
+        "next": [
+            "3",
+            "4"
+        ]
+    },
+    {
+        "name": "first node",
+        "duration": 3,
+        "early_start": 5,
+        "early_finish": 4,
+        "late_start": 2,
+        "late_finish": 5,
+        "reserve": 1,
+        "previous": [
+            "1",
+            "2"
+        ],
+        "next": [
+            "3",
+            "4"
+        ]
+    },
+    {
+        "name": "first node",
+        "duration": 3,
+        "early_start": 5,
+        "early_finish": 4,
+        "late_start": 2,
+        "late_finish": 5,
+        "reserve": 1,
+        "previous": [
+            "1",
+            "2"
+        ],
+        "next": [
+            "3",
+            "4"
+        ]
+    },
+    {
+        "name": "testowanie",
+        "duration": 5,
+        "early_start": 1,
+        "early_finish": 3,
+        "late_start": 5,
+        "late_finish": 8,
+        "reserve": 2,
+        "previous": [
+            "4",
+            "5"
+        ],
+        "next": [
+            "6",
+            "7"
+        ]
+    },
+    {
+        "name": "proba",
+        "duration": 5,
+        "early_start": 2,
+        "early_finish": 2,
+        "late_start": 4,
+        "late_finish": 5,
+        "reserve": 6,
+        "previous": [
+            "4",
+            "5"
+        ],
+        "next": [
+            "6",
+            "7"
+        ]
+    },
+    {
+        "name": "proba",
+        "duration": 5,
+        "early_start": 2,
+        "early_finish": 2,
+        "late_start": 4,
+        "late_finish": 5,
+        "reserve": 6,
+        "previous": [
+            "4",
+            "5"
+        ],
+        "next": [
+            "6",
+            "7"
+        ]
     }
 ]

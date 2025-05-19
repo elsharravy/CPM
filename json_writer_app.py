@@ -29,7 +29,8 @@ def load_existing_nodes():
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('json_writer_site.html')
+    nodes = load_existing_nodes()
+    return render_template('json_writer_site.html', nodes=nodes)
 
 @app.route('/add', methods=['POST'])
 def add_node():
@@ -59,7 +60,8 @@ def add_node():
     writer = JsonWriter(OUTPUT_PATH)
     writer.write_nodes(nodes)
 
-    return render_template('json_writer_site.html', message=f'Node \"{n}\" added successfully!')
+    return render_template('json_writer_site.html', message=f'Node "{n}" added successfully!', nodes=nodes)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
