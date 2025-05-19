@@ -10,6 +10,18 @@ app = Flask(__name__)
 OUTPUT_PATH = 'test_output.json'
 INPUT_PATH = OUTPUT_PATH
 
+def generateLinks(nodes):
+    links = []
+    for i in range(len(nodes)):
+       prev = nodes[i].get_pr()
+       for j in range(len(prev)):
+        prevNode = nodes[ prev[j] ]
+        isCritical = False
+        if prevNode.get_r()==0 and nodes[i].get_r() == 0:
+            isCritical = True
+        entry = dict( source= nodes[ prev[j] ].get_n(), target=nodes[i].get_n(), critical=isCritical )
+        links.append( entry )
+    return links
 
 def clean_item(item):
     return {
@@ -72,24 +84,35 @@ def loadNodesFromJSONAndSendToWebsite():
     for i in range(len(nodes)):
        prev = nodes[i].get_pr()
        for j in range(len(prev)):
-          print(f"Prev[j] jest rowne: {prev[j]}")
+          print(f"Prev[j] jest rowne: {prev[j].get_n()}")
           for k in range(len(nodes)):
-             if prev[j] == nodes[k].get_n():
+             if prev[j].get_n() == nodes[k].get_n():
                 prev[j]=k
                 print(f"K jest rowne: {k}")
                 break
+    print("Compiler input-------------")
+    for node in nodes:
+        print(node)
     compiled_nodes = Compiler.Compile(nodes)
+    print("Compiler output-------------")
+    for node in compiled_nodes:
+        print(node)
+    '''
     links = [
-        { "source": 'A', "target": 'B' },
-        { "source": 'B', "target": 'C' }
+        { "source": 'a', "target": 'b' },
+        { "source": 'a', "target": 'c' },
+        { "source": 'b', "target": 'd' },
+        { "source": 'c', "target": 'd' }
     ];
+    '''
+    links = generateLinks(compiled_nodes)
 
     arrayOfGraphData = []
 
     for i in range(len(compiled_nodes)):
-        obj = dict( id=i, left= compiled_nodes[i].get_es(), right=compiled_nodes[i].get_ef(), bottom=compiled_nodes[i].get_r(), top=i  )
+        obj = dict( id=compiled_nodes[i].get_n(), left= compiled_nodes[i].get_es(), right=compiled_nodes[i].get_ef(), bottom=compiled_nodes[i].get_r(), top=compiled_nodes[i].get_n()  )
         arrayOfGraphData.append(obj)
-
+    print(arrayOfGraphData)
     return jsonify({"nodes": arrayOfGraphData, "links": links})
 
 if __name__ == '__main__':

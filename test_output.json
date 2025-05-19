@@ -1,7 +1,7 @@
 [
     {
         "name": "a",
-        "duration": 3,
+        "duration": 1,
         "early_start": null,
         "early_finish": null,
         "late_start": null,
@@ -12,6 +12,17 @@
     },
     {
         "name": "b",
+        "duration": 2,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
+        "previous": ["a"],
+        "next": []
+    },
+    {
+        "name": "c",
         "duration": 5,
         "early_start": null,
         "early_finish": null,
@@ -19,6 +30,17 @@
         "late_finish": null,
         "reserve": null,
         "previous": ["a"],
+        "next": []
+    },
+    {
+        "name": "d",
+        "duration": 3,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
+        "previous": ["b","c"],
         "next": []
     }
 ]

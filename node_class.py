@@ -79,3 +79,5 @@ class node: # 7 pierwszych warosci odpowiada tym z 1 prezentacji
             "next": self.next
         }
 
+    def __str__(self):
+        return f"Node: {self.name}, Duration: {self.duration},  Previous: {self.previous} , Next: {self.next}, Early Start: {self.early_start}, Early Finish: {self.early_finish}, Reserve: {self.reserve}"
