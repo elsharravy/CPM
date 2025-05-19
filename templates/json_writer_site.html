@@ -54,10 +54,17 @@ let nodeGroup, linkGroup;
 function updateGraph(nodes, links) {
     svg.selectAll("*").remove(); // Clear previous graph
 
-    const simulation = d3.forceSimulation(nodes)
-        .force("link", d3.forceLink(links).id(d => d.id).distance(100))
-        .force("charge", d3.forceManyBody().strength(-300))
-        .force("center", d3.forceCenter(width / 2, height / 2));
+    nodes.forEach((d, i) => {
+        d.level = i; // Or set manually if you have topological level info
+    });
+
+const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(120))
+    .force("charge", d3.forceManyBody().strength(-300))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("x", d3.forceX(d => d.level * 150)) // Horizontal bias
+    .force("y", d3.forceY(height / 2)) // Keep vertically centered
+    .force("collide", d3.forceCollide(50)); // Circle radius + padding
 
     svg.append("defs").append("marker")
         .attr("id", "arrowhead")
@@ -78,7 +85,7 @@ function updateGraph(nodes, links) {
             .attr("stroke", d => d.critical ? "red" : "#999")
             .attr("stroke-opacity", 1)
             .attr("marker-end", "url(#arrowhead)")
-            .attr("stroke-width", d => d.critical ? 1 : 1);
+            .attr("stroke-width", d => d.critical ? 2 : 1);
     
 
     nodeGroup = svg.append("g")
