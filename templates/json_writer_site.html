@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Node</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
     <div style="display: flex; align-items: flex-start; gap: 60px;">
@@ -64,5 +65,153 @@
         </div>
         {% endif %}
     </div>
+
+<button onclick="loadGraph()">Generate/Refresh Graph</button>
+
+    <h2>Node Graph</h2>
+<svg id="graph" width="800" height="600" style="border:1px solid #ccc;"></svg>
+
+
+<script>
+function loadGraph() {
+    fetch('/gen')
+        .then(response => response.json())
+        .then(data => {
+            data.links.forEach(link => {
+                if (link.critical) {
+                const src = data.nodes.find(n => n.id === link.source);
+                const tgt = data.nodes.find(n => n.id === link.target);
+                if (src) src.hasCriticalLink = true;
+                if (tgt) tgt.hasCriticalLink = true;
+            }
+        });
+            updateGraph(data.nodes, data.links);
+        });
+}
+
+// Initial empty graph
+const svg = d3.select("#graph");
+const width = +svg.attr("width");
+const height = +svg.attr("height");
+
+let nodeGroup, linkGroup;
+
+function updateGraph(nodes, links) {
+    svg.selectAll("*").remove(); // Clear previous graph
+
+    nodes.forEach((d, i) => {
+        d.level = i; // Or set manually if you have topological level info
+    });
+
+const simulation = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id(d => d.id).distance(120))
+    .force("charge", d3.forceManyBody().strength(-300))
+    .force("center", d3.forceCenter(width / 2, height / 2))
+    .force("x", d3.forceX(d => d.level * 150)) // Horizontal bias
+    .force("y", d3.forceY(height / 2)) // Keep vertically centered
+    .force("collide", d3.forceCollide(50)); // Circle radius + padding
+
+    svg.append("defs").append("marker")
+        .attr("id", "arrowhead")
+        .attr("viewBox", "0 -5 10 10")
+        .attr("refX", 15)
+        .attr("refY", 0)
+        .attr("markerWidth", 6)
+        .attr("markerHeight", 6)
+        .attr("orient", "auto")
+      .append("path")
+        .attr("d", "M0,-5L10,0L0,5")
+        .attr("fill", "#999");
+
+    linkGroup = svg.append("g")
+        .selectAll("line")
+        .data(links)
+        .join("line")
+            .attr("stroke", d => d.critical ? "red" : "#999")
+            .attr("stroke-opacity", 1)
+            .attr("marker-end", "url(#arrowhead)")
+            .attr("stroke-width", d => d.critical ? 2 : 1);
+    
+
+    nodeGroup = svg.append("g")
+      .selectAll("g")
+      .data(nodes)
+      .join("g")
+      .call(drag(simulation));
+
+    nodeGroup.append("circle")
+        .attr("r", 40)
+        .attr("fill", "#fff")
+        .attr("stroke", d => d.hasCriticalLink ? "red" : "#000")
+        .attr("stroke-width", d => d.hasCriticalLink ? 3 : 2);
+
+    nodeGroup.append("text")
+        .attr("y", -20)
+        .attr("text-anchor", "middle")
+        .text(d => d.top);
+
+    nodeGroup.append("text")
+        .attr("x", 20)
+        .attr("y", 5)
+        .attr("text-anchor", "start")
+        .text(d => d.right);
+
+    nodeGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 25)
+        .attr("text-anchor", "middle")
+        .text(d => d.bottom);
+
+    nodeGroup.append("text")
+        .attr("x", -20)
+        .attr("y", 5)
+        .attr("text-anchor", "end")
+        .text(d => d.left);
+
+simulation.on("tick", () => {
+    nodeGroup.attr("transform", d => `translate(${d.x},${d.y})`);
+
+    linkGroup
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => {
+            const dx = d.target.x - d.source.x;
+            const dy = d.target.y - d.source.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const r = 40; // radius of the circle
+            return d.target.x - (dx / dist) * r;
+        })
+        .attr("y2", d => {
+            const dx = d.target.x - d.source.x;
+            const dy = d.target.y - d.source.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const r = 40; // radius of the circle
+            return d.target.y - (dy / dist) * r;
+        });
+});
+}
+
+function drag(simulation) {
+    return d3.drag()
+        .on("start", (event, d) => {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        })
+        .on("drag", (event, d) => {
+            d.fx = event.x;
+            d.fy = event.y;
+        })
+        .on("end", (event, d) => {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        });
+}
+</script>
+
+    {% if message %}
+        <p style="color:green;">{{ message }}</p>
+    {% endif %}
 </body>
 </html>

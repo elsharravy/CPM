@@ -1,48 +1,7 @@
 [
     {
-        "name": "Start",
-        "duration": 5,
-        "early_start": 0,
-        "early_finish": 5,
-        "late_start": 0,
-        "late_finish": 5,
-        "reserve": 0,
-        "previous": [],
-        "next": [
-            "TaskA"
-        ]
-    },
-    {
-        "name": "TaskA",
-        "duration": 3,
-        "early_start": 5,
-        "early_finish": 8,
-        "late_start": 5,
-        "late_finish": 8,
-        "reserve": 0,
-        "previous": [
-            "Start"
-        ],
-        "next": [
-            "End"
-        ]
-    },
-    {
-        "name": "End",
-        "duration": 2,
-        "early_start": 8,
-        "early_finish": 10,
-        "late_start": 8,
-        "late_finish": 10,
-        "reserve": 0,
-        "previous": [
-            "TaskA"
-        ],
-        "next": []
-    },
-    {
-        "name": "b",
-        "duration": 5,
+        "name": "a",
+        "duration": 1,
         "early_start": null,
         "early_finish": null,
         "late_start": null,
@@ -52,122 +11,70 @@
         "next": []
     },
     {
-        "name": "first node",
-        "duration": 3,
-        "early_start": 5,
-        "early_finish": 4,
-        "late_start": 2,
-        "late_finish": 5,
-        "reserve": 1,
+        "name": "b",
+        "duration": 2,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
         "previous": [
-            "1",
-            "2"
+            "a"
         ],
-        "next": [
-            "3",
-            "4"
-        ]
+        "next": []
     },
     {
-        "name": "first node",
-        "duration": 3,
-        "early_start": 5,
-        "early_finish": 4,
-        "late_start": 2,
-        "late_finish": 5,
-        "reserve": 1,
-        "previous": [
-            "1",
-            "2"
-        ],
-        "next": [
-            "3",
-            "4"
-        ]
-    },
-    {
-        "name": "first node",
-        "duration": 3,
-        "early_start": 5,
-        "early_finish": 4,
-        "late_start": 2,
-        "late_finish": 5,
-        "reserve": 1,
-        "previous": [
-            "1",
-            "2"
-        ],
-        "next": [
-            "3",
-            "4"
-        ]
-    },
-    {
-        "name": "first node",
-        "duration": 3,
-        "early_start": 5,
-        "early_finish": 4,
-        "late_start": 2,
-        "late_finish": 5,
-        "reserve": 1,
-        "previous": [
-            "1",
-            "2"
-        ],
-        "next": [
-            "3",
-            "4"
-        ]
-    },
-    {
-        "name": "testowanie",
+        "name": "c",
         "duration": 5,
-        "early_start": 1,
-        "early_finish": 3,
-        "late_start": 5,
-        "late_finish": 8,
-        "reserve": 2,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
         "previous": [
-            "4",
-            "5"
+            "a"
         ],
-        "next": [
-            "6",
-            "7"
-        ]
+        "next": []
     },
     {
-        "name": "proba",
-        "duration": 5,
-        "early_start": 2,
-        "early_finish": 2,
-        "late_start": 4,
-        "late_finish": 5,
-        "reserve": 6,
+        "name": "d",
+        "duration": 3,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
         "previous": [
-            "4",
-            "5"
+            "b",
+            "c"
         ],
-        "next": [
-            "6",
-            "7"
-        ]
+        "next": []
     },
     {
-        "name": "proba",
-        "duration": 5,
-        "early_start": 2,
-        "early_finish": 2,
-        "late_start": 4,
-        "late_finish": 5,
-        "reserve": 6,
+        "name": "e",
+        "duration": 4,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
         "previous": [
-            "4",
-            "5"
+            "d"
         ],
-        "next": [
-            "6",
-            "7"
-        ]
+        "next": []
+    },
+    {
+        "name": "f",
+        "duration": 6,
+        "early_start": null,
+        "early_finish": null,
+        "late_start": null,
+        "late_finish": null,
+        "reserve": null,
+        "previous": [
+            "b",
+            "e"
+        ],
+        "next": []
     }
 ]

@@ -3,6 +3,6 @@
 JSON={
     "activities_key_name" : "activities",
     "duration_key_name" : "duration",
-    "precedent_key_name" : "precedent",
+    "precedent_key_name" : "previous",
     "name_key_name" : "name",
 }

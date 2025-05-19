@@ -1,5 +1,14 @@
 import node_class
 import Compiler_class
+from json_reader import Json_reader
+import os
+
+# json_reader_test
+
+Json_reader.load("data/test_data/example.json")
+
+
+os.sys.exit(0)
 
 tab1 = []
 tab2 = [0]

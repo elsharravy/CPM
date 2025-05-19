@@ -1,24 +1,23 @@
-{
-    "activities": [
+ [
       {
         "name": "A",
         "duration": 5,
-        "precedent": ""
+        "previous": []
       },
       {
         "name": "B",
         "duration": 8,
-        "precedent": "A"
+        "previous": ["A"]
       },
       {
         "name": "C",
         "duration": 3,
-        "precedent": "A,B"
+        "previous": ["A","B"]
       },
       {
         "name": "D",
         "duration": 7,
-        "precedent": "C"
+        "previous": ["C"]
       }
-    ]
-  }
+]
+  
