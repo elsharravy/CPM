@@ -69,7 +69,7 @@
 <button onclick="loadGraph()">Generate Graph</button>
 
     <h2>Node Graph</h2>
-<svg id="graph" width="800" height="600" style="border:1px solid #ccc;"></svg>
+<svg id="graph" width="1200" height="600" style="border:1px solid #ccc;"></svg>
 
 
 <script>
@@ -233,6 +233,49 @@ simulation.on("tick", () => {
             return d.target.y - (dy / dist) * r;
         });
 });
+
+// === Legend ===
+const legendX = width  -  80;  // adjust as needed
+const legendY = height -  80;
+
+const legendInfo = nodes[0]; 
+
+const legend = svg.append("g")
+    .attr("class", "legend")
+    .attr("transform", `translate(${legendX},${legendY})`);
+
+legend.append("circle")
+    .attr("r", 50)
+    .attr("fill", "#fff")
+    .attr("stroke", "#333")
+    .attr("stroke-width", 2);
+
+// top text
+legend.append("text")
+    .attr("y", -20)
+    .attr("text-anchor", "middle")
+    .text("Id");
+
+// right text
+legend.append("text")
+    .attr("x", 20)
+    .attr("y", 5)
+    .attr("text-anchor", "start")
+    .text("EF");
+
+// bottom text
+legend.append("text")
+    .attr("x", 0)
+    .attr("y", 25)
+    .attr("text-anchor", "middle")
+    .text("Reserve");
+
+// left text
+legend.append("text")
+    .attr("x", -20)
+    .attr("y", 5)
+    .attr("text-anchor", "end")
+    .text("ES");
 }
 
 function drag(simulation) {
