@@ -14,13 +14,12 @@
                 <label>Name: <input type="text" name="n" required></label><br>
                 <label>Duration: <input type="number" name="t" required></label><br>
                 <label>Previous (comma-separated): <input type="text" name="pr"></label><br>
-                <label>Early Start: <input type="number" name="es"></label><br>
-                <label>Early Finish: <input type="number" name="ef"></label><br>
-                <label>Late Start: <input type="number" name="ls"></label><br>
-                <label>Reserve: <input type="number" name="r"></label><br>
-                <label>Late Finish: <input type="number" name="lf"></label><br>
-                <label>Next (comma-separated): <input type="text" name="ne"></label><br>
                 <button type="submit">Add Node</button>
+            </form>
+
+            <form action="/clean" method="get">
+                <br><br>
+                <button type="submit">Delete nodes</button>
             </form>
 
             {% if message %}
@@ -66,7 +65,7 @@
         {% endif %}
     </div>
 
-<button onclick="loadGraph()">Generate/Refresh Graph</button>
+<button onclick="loadGraph()">Generate Graph</button>
 
     <h2>Node Graph</h2>
 <svg id="graph" width="800" height="600" style="border:1px solid #ccc;"></svg>

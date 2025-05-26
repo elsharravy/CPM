@@ -79,6 +79,11 @@ def add_node():
 
     return render_template('json_writer_site.html', message=f'Node "{n}" added successfully!', nodes=nodes)
 
+@app.route('/clean', methods=['GET'])
+def clean():
+    with open("test_output.json", "w") as file:
+        file.write("[\n]")
+    return render_template('json_writer_site.html', message=f'Nodes deleted')
 
 @app.route("/gen")
 def loadNodesFromJSONAndSendToWebsite():
