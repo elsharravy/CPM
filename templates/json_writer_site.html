@@ -26,10 +26,10 @@
                 <p style="color:green;">{{ message }}</p>
             {% endif %}
         </div>
-
+        <div id="node-table">
         <!-- PRAWA STRONA -->
         {% if nodes %}
-        <div>
+        
             <h1>Current Nodes</h1>
             <table border="1" cellpadding="5">
                 <thead>
@@ -61,8 +61,9 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
+        
         {% endif %}
+        </div>
     </div>
 
 <button onclick="loadGraph()">Generate Graph</button>
@@ -84,8 +85,50 @@ function loadGraph() {
                 if (tgt) tgt.hasCriticalLink = true;
             }
         });
+            updateTable(data.compiled); 
             updateGraph(data.nodes, data.links);
         });
+}
+
+
+function updateTable(nodes) {
+    const tableHTML = `
+        <h1>Current Nodes</h1>
+        <table border="1" cellpadding="5">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Duration</th>
+                    <th>Previous</th>
+                    <th>Early Start</th>
+                    <th>Early Finish</th>
+                    <th>Late Start</th>
+                    <th>Late Finish</th>
+                    <th>Reserve</th>
+                    <th>Next</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${nodes.map(node => `
+                    <tr>
+                        <td>${node.name}</td>
+                        <td>${node.duration}</td>
+                        <td>${node.previous.join(', ')}</td>
+                        <td>${node.early_start}</td>
+                        <td>${node.early_finish}</td>
+                        <td>${node.late_start}</td>
+                        <td>${node.late_finish}</td>
+                        <td>${node.reserve}</td>
+                        <td>${node.next.join(', ')}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+    `;
+
+    // Replace the existing table container with new HTML
+    const tableContainer = document.getElementById("node-table");
+    tableContainer.innerHTML = tableHTML;
 }
 
 // Initial empty graph

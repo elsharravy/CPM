@@ -115,12 +115,16 @@ def loadNodesFromJSONAndSendToWebsite():
     links = generateLinks(compiled_nodes)
 
     arrayOfGraphData = []
+    arrayOfNodesData = []
 
     for i in range(len(compiled_nodes)):
         obj = dict( id=compiled_nodes[i].get_n(), left= compiled_nodes[i].get_es(), right=compiled_nodes[i].get_ef(), bottom=compiled_nodes[i].get_r(), top=compiled_nodes[i].get_n()  )
         arrayOfGraphData.append(obj)
+    for i in range(len(compiled_nodes)):
+        obj = dict( name=compiled_nodes[i].get_n(), early_start= compiled_nodes[i].get_es(), early_finish=compiled_nodes[i].get_ef(), reserve=compiled_nodes[i].get_r(), duration=compiled_nodes[i].get_t(), previous=compiled_nodes[i].get_pr(), next=compiled_nodes[i].get_ne(), late_start=compiled_nodes[i].get_ls(), late_finish=compiled_nodes[i].get_lf()  )
+        arrayOfNodesData.append(obj)
     print(arrayOfGraphData)
-    return jsonify({"nodes": arrayOfGraphData, "links": links})
+    return jsonify({"nodes": arrayOfGraphData, "links": links, "compiled" : arrayOfNodesData})
 
 if __name__ == '__main__':
     app.run(debug=True)
