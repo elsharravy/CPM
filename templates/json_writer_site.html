@@ -97,6 +97,7 @@ function updateTable(nodes) {
         <table border="1" cellpadding="5">
             <thead>
                 <tr>
+                    <th>Lp.</th>
                     <th>Name</th>
                     <th>Duration</th>
                     <th>Previous</th>
@@ -109,8 +110,9 @@ function updateTable(nodes) {
                 </tr>
             </thead>
             <tbody>
-                ${nodes.map(node => `
+                ${nodes.map((node, index ) => `
                     <tr>
+                        <td>${index + 1}</td>
                         <td>${node.name}</td>
                         <td>${node.duration}</td>
                         <td>${node.previous.join(', ')}</td>
